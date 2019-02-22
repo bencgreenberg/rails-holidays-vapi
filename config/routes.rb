@@ -6,4 +6,12 @@ Rails.application.routes.draw do
   post '/event', to: 'holidays#event'
   
   post '/dtmf', to: 'holidays#dtmf'
+
+  post '/date_type', to: 'holidays#date_type'
+
+  post '/country_choice', to: 'holidays#country_choice'
+
+  post '/holiday_output', to: 'holidays#holiday_output'
+
+  post '/event', to: 'holidays#event'
 end
