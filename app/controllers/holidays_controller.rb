@@ -71,14 +71,14 @@ class HolidaysController < ActionController::API
 
     def holiday_output
         country_input = params['dtmf'] || parsed_body['dtmf']
-        date_input = ((params['date'] || parsed_body['date']) || '')
+        date_input = params['date'] || ''
 
         if country_input == '1'
-            @holidays = holiday_lookup(date_input, :us) 
+            holidays = holiday_lookup(date_input, :us) 
         elsif country_input == '2'
-            @holidays = holiday_lookup(date_input, :gb)
+            holidays = holiday_lookup(date_input, :gb)
         elsif country_input == '3'
-            @holidays = holiday_lookup(date_input, :all)
+            holidays = holiday_lookup(date_input, :all)
         else
             render json:
         [
@@ -89,7 +89,7 @@ class HolidaysController < ActionController::API
         ].to_json
         end
 
-        if (@holidays.length == 0 || @holidays.nil?)
+        if (holidays.length == 0 || holidays.nil?)
             render json:
             [
                 {
@@ -102,7 +102,7 @@ class HolidaysController < ActionController::API
             [
                 {
                     :action => 'talk',
-                    :text => "Your colleagues are not at their desk today. It is #{@holidays[0][:name]}. Goodbye."
+                    :text => "Your colleagues are not at their desk today. It is #{holidays[0][:name]}. Goodbye."
                 }
             ].to_json
         end
@@ -116,18 +116,18 @@ class HolidaysController < ActionController::API
 
     def holiday_lookup(date_input, country)
         with_date = false
-        (date_input != '' || !date_input.nil?) ? with_date = true : with_date = false
+        (date_input == '' || date_input.nil?) ? with_date = false : with_date = true
 
         if with_date
-            @year = date_input[0, 4].to_i
-            @month = date_input[4..5].to_i
-            @day = date_input[6..7].to_i
+            year = date_input[0, 4].to_i
+            month = date_input[4..5].to_i
+            day = date_input[6..7].to_i
         end
 
         if country != :all
-            with_date ? Holidays.on(Date.civil(@year, @month, @day), country) : Holidays.on(Date.today, country)
+            with_date ? Holidays.on(Date.civil(year, month, day), country) : Holidays.on(Date.today, country)
         else
-            with_date ? Holidays.on(Date.civil(@year, @month, @day)) : Holidays.on(Date.today)
+            with_date ? Holidays.on(Date.civil(year, month, day)) : Holidays.on(Date.today)
         end
     end
 end
