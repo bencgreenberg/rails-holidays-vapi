@@ -1,24 +1,26 @@
-# README
+# Are your colleagues on holiday?
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a Rails application powered by Nexmo's Voice API that creates a phone service that lets users dial in to see if there a national holiday in either a specific country or worldwide. 
 
-Things you may want to cover:
+## Requirements
 
-* Ruby version
+* A [Nexmo account](https://dashboard.nexmo.com/sign-up)
+* Rails 5.2+
+* [Holidays Gem](https://github.com/holidays/holidays)
+* [ngrok](https://ngrok.io)
 
-* System dependencies
+## Installation
 
-* Configuration
+* Clone this repository
+* Provision a Nexmo virtual number from the Nexmo dashboard
+* Rename `.env.sample` to `.env` and insert your credentials in the file
+* Start up the Rails server
+* Make your server externally accessible with ngrok
 
-* Database creation
+## Usage
 
-* Database initialization
+* Dial your phone number and follow the prompts on the phone call
 
-* How to run the test suite
+## License
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+This application is under the [MIT License](LICENSE)
